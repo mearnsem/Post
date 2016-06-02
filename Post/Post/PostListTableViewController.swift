@@ -15,9 +15,6 @@ class PostListTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
-        
-        
         tableView.estimatedRowHeight = 50
         tableView.rowHeight = UITableViewAutomaticDimension
     }
@@ -28,14 +25,13 @@ class PostListTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return postController.posts.count
     }
-
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("postCell", forIndexPath: indexPath)
 
         let post = postController.posts[indexPath.row]
         cell.textLabel?.text = post.text
-        cell.detailTextLabel?.text = post.username
+        cell.detailTextLabel?.text = "\(post.username) \(NSDate(timeIntervalSince1970: post.timestamp!)) \(indexPath.row)"
 
         return cell
     }

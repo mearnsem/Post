@@ -13,9 +13,13 @@ class PostController {
     static let baseURL = NSURL(string: "https://devmtn-post.firebaseio.com")
     static let endpoint = baseURL?.URLByAppendingPathComponent("/posts.json")
     
-    var posts = [Post]()
+    weak var delegate = PostControllerDelegate?()
     
-    var delegate = PostControllerDelegate?()
+    var posts: [Post] = [] {
+        didSet {
+            delegate?.postsUpdated(posts)
+        }
+    }
     
     init() {
         fetchPosts()
@@ -52,6 +56,6 @@ class PostController {
     }
 }
 
-protocol PostControllerDelegate {
+protocol PostControllerDelegate: class {
     func postsUpdated(posts: [Post])
 }
