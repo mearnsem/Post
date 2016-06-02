@@ -8,17 +8,32 @@
 
 import UIKit
 
-class PostListTableViewController: UITableViewController {
+class PostListTableViewController: UITableViewController, PostControllerDelegate {
 
     var postController = PostController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tableView.estimatedRowHeight = 50
+        tableView.estimatedRowHeight = 100
         tableView.rowHeight = UITableViewAutomaticDimension
     }
 
+    func postsUpdated(posts: [Post]) {
+        tableView.reloadData()
+    }
+    
+   
+    @IBAction func refreshControlPull(sender: UIRefreshControl) {
+        
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+        
+        postController.fetchPosts { (posts) in
+            self.refreshControl?.endRefreshing()
+        }
+        
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+    }
     
     // MARK: - Table view data source
 

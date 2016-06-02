@@ -47,6 +47,11 @@
                     <navigationItem key="navigationItem" id="ML2-cr-EOV"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="agS-W3-kJ0" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <customObject id="8oz-6w-AXi" customClass="UIRefreshControl">
+                    <connections>
+                        <action selector="refreshControlPull:" destination="mpq-Nt-TEa" eventType="valueChanged" id="OCc-XW-4xf"/>
+                    </connections>
+                </customObject>
             </objects>
             <point key="canvasLocation" x="1275" y="61"/>
         </scene>
