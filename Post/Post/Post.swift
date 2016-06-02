@@ -20,21 +20,29 @@ struct Post {
     let timestamp: NSTimeInterval?
     let identifier: NSUUID?
     
-    init(username: String, text: String, timestamp: NSTimeInterval? = NSDate().timeIntervalSince1970, identifier: NSUUID? = nil) {
+//    var queryTimestamp: String {
+//        
+//    }
+    
+    init(username: String, text: String, timestamp: NSTimeInterval? = NSDate().timeIntervalSince1970, identifier: NSUUID? = NSUUID()) {
         self.username = username
         self.text = text
         self.timestamp = timestamp
         self.identifier = identifier
     }
     
-    init?(dictionary: [String: AnyObject]) {
-        guard let username = dictionary[keyUsername] as? String, text = dictionary[keyText] as? String, timestamp = dictionary[keyTimestamp] as? NSTimeInterval, identifier = dictionary[keyIdentifier] as? NSUUID else {
+    init?(dictionary: [String: AnyObject], identifier: String?) {
+        guard let username = dictionary[keyUsername] as? String,
+            text = dictionary[keyText] as? String,
+            timestamp = dictionary[keyTimestamp] as? NSTimeInterval,
+            identifier = identifier,
+            uniqueIdentifier = NSUUID(UUIDString: identifier) else {
             return nil
         }
         self.username = username
         self.text = text
         self.timestamp = timestamp
-        self.identifier = identifier
+        self.identifier = uniqueIdentifier
     }
 }
 
