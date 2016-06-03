@@ -17,18 +17,31 @@ struct Post {
     
     let username: String
     let text: String
-    let timestamp: NSTimeInterval?
-    let identifier: NSUUID?
+    let timestamp: NSTimeInterval
+    let identifier: NSUUID
     
-//    var queryTimestamp: String {
-//        
-//    }
+    var endpoint: NSURL? {
+        return PostController.baseURL?.URLByAppendingPathComponent(self.identifier.UUIDString).URLByAppendingPathExtension(".json")
+    }
     
-    init(username: String, text: String, timestamp: NSTimeInterval? = NSDate().timeIntervalSince1970, identifier: NSUUID? = NSUUID()) {
+    var jsonValue: [String: AnyObject] {
+        let json: [String: AnyObject] = [keyUsername: self.username, keyText: self.text, keyTimestamp: self.timestamp]
+        return json
+    }
+    
+    var jsonData: NSData? {
+        return try? NSJSONSerialization.dataWithJSONObject(self.jsonValue, options: NSJSONWritingOptions.PrettyPrinted)
+    }
+    
+    var queryTimestamp: NSTimeInterval {
+        return timestamp - 0.000001
+    }
+    
+    init(username: String, text: String) {
         self.username = username
         self.text = text
-        self.timestamp = timestamp
-        self.identifier = identifier
+        self.timestamp = NSDate().timeIntervalSince1970
+        self.identifier = NSUUID()
     }
     
     init?(dictionary: [String: AnyObject], identifier: String?) {

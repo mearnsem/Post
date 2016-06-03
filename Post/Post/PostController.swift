@@ -25,6 +25,15 @@ class PostController {
         fetchPosts()
     }
     
+    func addPost(username: String, text: String) {
+        let post = Post(username: username, text: text)
+        guard let requestUrl = post.endpoint else { fatalError("URL optional is nil") }
+        
+        NetworkController.performRequestForUrl(requestUrl, httpmethod: .Put, body: post.jsonData) { (data, error) in
+            <#code#>
+        }
+    }
+    
     func fetchPosts(completion: ((posts: [Post]) -> Void)? = nil) {
         
         guard let url = PostController.endpoint else { fatalError("URL optional is nil") }
@@ -39,19 +48,15 @@ class PostController {
             
             let posts = postDictionaries.flatMap({Post(dictionary: $0.1, identifier: $0.0)})
             
-            let sortedPosts = posts.sort({$0.0.timestamp > $0.1.timestamp})
+            let sortedPosts = posts.sort({$0.timestamp > $1.timestamp})
             
+            self.posts = sortedPosts
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 if let completion = completion {
                     completion(posts: sortedPosts)
                 }
             })
-            
-            for post in sortedPosts {
-                print(post.username)
-            }
-            
-            
+
         }
     }
 }

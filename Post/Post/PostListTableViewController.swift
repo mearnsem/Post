@@ -14,13 +14,10 @@ class PostListTableViewController: UITableViewController, PostControllerDelegate
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        postController.delegate = self
         
         tableView.estimatedRowHeight = 100
         tableView.rowHeight = UITableViewAutomaticDimension
-    }
-
-    func postsUpdated(posts: [Post]) {
-        tableView.reloadData()
     }
     
    
@@ -29,10 +26,16 @@ class PostListTableViewController: UITableViewController, PostControllerDelegate
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         
         postController.fetchPosts { (posts) in
-            self.refreshControl?.endRefreshing()
+            sender.endRefreshing()
+            
+            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
         }
         
-        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+        
+    }
+    
+    func postsUpdated(posts: [Post]) {
+        tableView.reloadData()
     }
     
     // MARK: - Table view data source
@@ -46,7 +49,7 @@ class PostListTableViewController: UITableViewController, PostControllerDelegate
 
         let post = postController.posts[indexPath.row]
         cell.textLabel?.text = post.text
-        cell.detailTextLabel?.text = "\(post.username) \(NSDate(timeIntervalSince1970: post.timestamp!)) \(indexPath.row)"
+        cell.detailTextLabel?.text = "\(post.username) \(NSDate(timeIntervalSince1970: post.timestamp)) \(indexPath.row)"
 
         return cell
     }
