@@ -15,6 +15,7 @@ class PostListTableViewController: UITableViewController, PostControllerDelegate
     override func viewDidLoad() {
         tableView.estimatedRowHeight = 80
         tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.backgroundColor = UIColor(red: 54/255, green: 54/255, blue: 54/255, alpha: 1)
         
         postController.delegate = self
     }
@@ -85,11 +86,15 @@ class PostListTableViewController: UITableViewController, PostControllerDelegate
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("postCell", forIndexPath: indexPath)
+        cell.backgroundColor = UIColor(red: 54/255, green: 54/255, blue: 54/255, alpha: 1)
         
         let post = postController.posts[indexPath.row]
         cell.textLabel?.text = post.text
+        cell.textLabel?.textColor = .whiteColor()
+        
         let date = NSDate(timeIntervalSince1970: post.timestamp)
         cell.detailTextLabel?.text = "\(post.username) - \(date.dateString())"
+        cell.detailTextLabel?.textColor = .whiteColor()
         
         return cell
     }
