@@ -33,12 +33,12 @@ struct Post {
     init?(dictionary: [String: AnyObject], identifier: String) {
         guard let username = dictionary[keyUsername] as? String,
             text = dictionary[keyText] as? String,
-            timestamp = dictionary[keyTimestamp] as? Double,
+            timestamp = dictionary[keyTimestamp] as? NSTimeInterval,
             identifier = NSUUID(UUIDString: identifier) else {return nil}
         
         self.username = username
         self.text = text
-        self.timestamp = NSTimeInterval(floatLiteral: timestamp)
+        self.timestamp = timestamp
         self.identifier = identifier
     }
 }
