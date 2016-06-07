@@ -60,7 +60,7 @@ class PostListTableViewController: UITableViewController, PostControllerDelegate
     
     func presentErrorAlert() {
         let missingFieldsErrorAlert = UIAlertController(title: "Missing Info", message: "Please provide a username and a message", preferredStyle: .Alert)
-        let okAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+        let okAction = UIAlertAction(title: "Ok", style: .Default, handler: nil)
         missingFieldsErrorAlert.addAction(okAction)
         self.presentViewController(missingFieldsErrorAlert, animated: true, completion: nil)
     }
@@ -71,6 +71,16 @@ class PostListTableViewController: UITableViewController, PostControllerDelegate
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return postController.posts.count
+    }
+    
+    override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        if indexPath.row + 1 == postController.posts.count {
+            postController.fetchPosts(false, completion: { (posts) in
+                if !posts.isEmpty {
+                    tableView.reloadData()
+                }
+            })
+        }
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {

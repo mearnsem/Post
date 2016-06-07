@@ -19,9 +19,9 @@ struct Post {
     let timestamp: NSTimeInterval
     let identifier: NSUUID
     
-//    var queryTimestamp: {
-//        
-//    }
+    var queryTimestamp: NSTimeInterval {
+        return self.timestamp -  0.000001 
+    }
     
     var endpoint: NSURL? {
         return PostController.baseUrl?.URLByAppendingPathComponent(identifier.UUIDString).URLByAppendingPathExtension("json")

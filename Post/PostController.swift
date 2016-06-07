@@ -41,7 +41,7 @@ class PostController {
     func fetchPosts(reset: Bool = true, completion: ((posts: [Post]) -> Void)? = nil) {
         guard let url = PostController.endpoint else {return}
         
-        let queryEndInterval = reset ? NSDate().timeIntervalSince1970 : posts.last?.timestamp ?? NSDate().timeIntervalSince1970
+        let queryEndInterval = reset ? NSDate().timeIntervalSince1970 : posts.last?.queryTimestamp ?? NSDate().timeIntervalSince1970
         let urlParameters = [
             "orderBy": "\"timestamp\"",
             "endAt": "\(queryEndInterval)",
