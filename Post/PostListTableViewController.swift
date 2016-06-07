@@ -28,6 +28,43 @@ class PostListTableViewController: UITableViewController, PostControllerDelegate
         }
     }
     
+    @IBAction func addButtonPressed(sender: AnyObject) {
+        var userNameTextField = UITextField()
+        var messageTextField = UITextField()
+        let presentNewPostAlert = UIAlertController(title: "Post", message: "Write a message", preferredStyle: .Alert)
+        
+        presentNewPostAlert.addTextFieldWithConfigurationHandler { (textField) in
+            textField.placeholder = "username"
+            userNameTextField = textField
+        }
+        presentNewPostAlert.addTextFieldWithConfigurationHandler { (textField) in
+            textField.placeholder = "message"
+            messageTextField = textField
+        }
+        
+        let postAction = UIAlertAction(title: "Post", style: .Default) { (_) in
+            guard let userNameTextField = userNameTextField.text, messageTextField = messageTextField.text else { return }
+            self.postController.addPost(userNameTextField, text: messageTextField)
+            
+            if userNameTextField.isEmpty {
+                self.presentErrorAlert()
+            }
+            if messageTextField.isEmpty {
+                self.presentErrorAlert()
+            }
+        }
+        presentNewPostAlert.addAction(postAction)
+        tableView.reloadData()
+        self.presentViewController(presentNewPostAlert, animated: true, completion: nil)
+    }
+    
+    func presentErrorAlert() {
+        let missingFieldsErrorAlert = UIAlertController(title: "Missing Info", message: "Please provide a username and a message", preferredStyle: .Alert)
+        let okAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+        missingFieldsErrorAlert.addAction(okAction)
+        self.presentViewController(missingFieldsErrorAlert, animated: true, completion: nil)
+    }
+    
     func postsUpdated(posts: [Post]) {
         tableView.reloadData()
     }
