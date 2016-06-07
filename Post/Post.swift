@@ -23,6 +23,22 @@ struct Post {
 //        
 //    }
     
+    var endpoint: NSURL? {
+        return PostController.baseUrl?.URLByAppendingPathComponent(identifier.UUIDString).URLByAppendingPathExtension("json")
+    }
+    
+    var jsonValue: [String: AnyObject] {
+        return [
+            keyUsername: username,
+            keyText: text,
+            keyTimestamp: timestamp
+        ]
+    }
+    
+    var jsonData: NSData? {
+        return try? NSJSONSerialization.dataWithJSONObject(jsonValue, options: .PrettyPrinted)
+    }
+    
     init(username: String, text: String, timestamp: NSTimeInterval = NSDate().timeIntervalSince1970, identifier: NSUUID = NSUUID()) {
         self.username = username
         self.text = text
