@@ -43,17 +43,17 @@ class PostListTableViewController: UITableViewController, PostControllerDelegate
         }
         
         let postAction = UIAlertAction(title: "Post", style: .Default) { (_) in
-            guard let userNameTextField = userNameTextField.text, messageTextField = messageTextField.text else { return }
+            guard let userNameTextField = userNameTextField.text, messageTextField = messageTextField.text where userNameTextField.characters.count > 0 && messageTextField.characters.count > 0 else {
+                self.presentErrorAlert()
+                return
+            }
             self.postController.addPost(userNameTextField, text: messageTextField)
-            
-            if userNameTextField.isEmpty {
-                self.presentErrorAlert()
-            }
-            if messageTextField.isEmpty {
-                self.presentErrorAlert()
-            }
         }
         presentNewPostAlert.addAction(postAction)
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
+        presentNewPostAlert.addAction(cancelAction)
+        
         tableView.reloadData()
         self.presentViewController(presentNewPostAlert, animated: true, completion: nil)
     }
@@ -78,7 +78,8 @@ class PostListTableViewController: UITableViewController, PostControllerDelegate
         
         let post = postController.posts[indexPath.row]
         cell.textLabel?.text = post.text
-        cell.detailTextLabel?.text = "\(post.username) \(post.timestamp)"
+        let date = NSDate(timeIntervalSince1970: post.timestamp)
+        cell.detailTextLabel?.text = "\(post.username) \(date.dateString())"
         
         return cell
     }

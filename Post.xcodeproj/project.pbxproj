@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		400F916D1D076B8100960C7A /* DateHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 400F916C1D076B8000960C7A /* DateHelper.swift */; };
 		686131EB1CD92A0B00A46449 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 686131EA1CD92A0B00A46449 /* AppDelegate.swift */; };
 		686131F01CD92A0B00A46449 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 686131EE1CD92A0B00A46449 /* Main.storyboard */; };
 		686131F21CD92A0B00A46449 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 686131F11CD92A0B00A46449 /* Assets.xcassets */; };
@@ -37,6 +38,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		400F916C1D076B8000960C7A /* DateHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateHelper.swift; sourceTree = "<group>"; };
 		686131E71CD92A0B00A46449 /* Post.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Post.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		686131EA1CD92A0B00A46449 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		686131EF1CD92A0B00A46449 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -104,6 +106,7 @@
 			isa = PBXGroup;
 			children = (
 				686131EE1CD92A0B00A46449 /* Main.storyboard */,
+				400F916C1D076B8000960C7A /* DateHelper.swift */,
 				68D7B2B91CEA7CED00AC1655 /* Post.swift */,
 				68D7B2BD1CEA7F9D00AC1655 /* PostController.swift */,
 				68D7B2B71CEA4AB500AC1655 /* PostListTableViewController.swift */,
@@ -269,6 +272,7 @@
 				68D7B2B81CEA4AB500AC1655 /* PostListTableViewController.swift in Sources */,
 				686131EB1CD92A0B00A46449 /* AppDelegate.swift in Sources */,
 				686132191CD92A5500A46449 /* NetworkController.swift in Sources */,
+				400F916D1D076B8100960C7A /* DateHelper.swift in Sources */,
 				68D7B2BA1CEA7CED00AC1655 /* Post.swift in Sources */,
 				68D7B2BE1CEA7F9D00AC1655 /* PostController.swift in Sources */,
 			);
