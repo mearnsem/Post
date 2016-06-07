@@ -79,7 +79,7 @@ class PostListTableViewController: UITableViewController, PostControllerDelegate
         let post = postController.posts[indexPath.row]
         cell.textLabel?.text = post.text
         let date = NSDate(timeIntervalSince1970: post.timestamp)
-        cell.detailTextLabel?.text = "\(post.username) \(date.dateString())"
+        cell.detailTextLabel?.text = "\(post.username) - \(date.dateString())"
         
         return cell
     }

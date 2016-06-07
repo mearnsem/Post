@@ -38,10 +38,17 @@ class PostController {
         fetchPosts()
     }
     
-    func fetchPosts(completion: ((posts: [Post]) -> Void)? = nil) {
+    func fetchPosts(reset: Bool = true, completion: ((posts: [Post]) -> Void)? = nil) {
         guard let url = PostController.endpoint else {return}
         
-        NetworkController.performRequestForURL(url, httpMethod: .Get) { (data, error) in
+        let queryEndInterval = reset ? NSDate().timeIntervalSince1970 : posts.last?.timestamp ?? NSDate().timeIntervalSince1970
+        let urlParameters = [
+            "orderBy": "\"timestamp\"",
+            "endAt": "\(queryEndInterval)",
+            "limitToLast": "15",
+            ]
+        
+        NetworkController.performRequestForURL(url, httpMethod: .Get, urlParameters: urlParameters) { (data, error) in
             guard let data = data,
             postDictionaries = (try? NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments)) as? [String:[String: AnyObject]] else {
                 if let completion = completion {
@@ -58,7 +65,12 @@ class PostController {
                 if let completion = completion {
                     completion(posts: posts)
                 }
-                self.posts = sortedPosts
+                
+                if reset {
+                    self.posts = sortedPosts
+                } else {
+                    self.posts.appendContentsOf(sortedPosts)
+                }
                 return
             })
            
